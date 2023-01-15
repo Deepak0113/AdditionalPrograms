@@ -1,3 +1,5 @@
+package codechef;
+
 import java.util.Scanner;
 
 public class NEGPROD {
