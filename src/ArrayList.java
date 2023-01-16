@@ -48,8 +48,7 @@ public class ArrayList {
         for(int i=0; i<size; i++){
             System.out.print(array[i]+" ");
         }
-
-        System.out.println(" Size: "+size+" Length: "+array.length);
+        System.out.println();
     }
 
     // size

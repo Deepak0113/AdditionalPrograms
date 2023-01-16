@@ -1,3 +1,9 @@
+class NegativeYearException extends Exception{
+    NegativeYearException(){
+        super("Negative Year");
+    }
+}
+
 public class Calender {
     private int year;
     private String[] DAYS = new String[]{"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"};
@@ -7,10 +13,16 @@ public class Calender {
     private int count;
 
     Calender(int year){
-        this.year = year;
-        if(isLeapYear(year))
-            noOfDays[1] = 29;
-        this.count = getStartDay(year);
+        try{
+            if(year < 0)
+                throw new NegativeYearException();
+            this.year = year;
+            if(isLeapYear(year))
+                noOfDays[1] = 29;
+            this.count = getStartDay(year);
+        } catch (NegativeYearException nye){
+            System.out.println(nye);
+        }
     }
 
     private boolean isLeapYear(int year){
