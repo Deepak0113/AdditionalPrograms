@@ -13,16 +13,10 @@ public class Calender {
     private int count;
 
     Calender(int year){
-        try{
-            if(year < 0)
-                throw new NegativeYearException();
-            this.year = year;
-            if(isLeapYear(year))
-                noOfDays[1] = 29;
-            this.count = getStartDay(year);
-        } catch (NegativeYearException nye){
-            System.out.println(nye);
-        }
+        this.year = year;
+        if(isLeapYear(year))
+            noOfDays[1] = 29;
+        this.count = getStartDay(year);
     }
 
     private boolean isLeapYear(int year){
@@ -30,8 +24,8 @@ public class Calender {
     }
 
     void display(){
-        if(year<1000) System.out.println("     Year: 0" + year);
-        if(year<100) System.out.println("     Year: 00" + year);
+        if(year<1000 && year>=100) System.out.println("     Year: 0" + year);
+        if(year<100 && year>=10) System.out.println("     Year: 00" + year);
         if(year<10) System.out.println("     Year: 000" + year);
         else System.out.println("     Year: " + year);
         System.out.println();
