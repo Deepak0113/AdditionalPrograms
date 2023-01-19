@@ -3,52 +3,59 @@ package datastructures;
 import datastructures.exceptions.LinkedListNullException;
 import datastructures.exceptions.LinkedListOutOfBoundException;
 
-class Node{
+class DllNode{
     int data;
-    Node next;
+    DllNode next;
+    DllNode prev;
 
-    public Node(int data){
+    public DllNode(int data){
         this.data = data;
         this.next = null;
+        this.prev = null;
     }
 }
 
-public class LinkedList {
-    private Node head;
-    private Node tail;
+public class DoublyLinkedList {
+    private DllNode head;
+    private DllNode tail;
     private int size = 0;
 
     public void addFirst(int value){
         if(head == null){
-            head = new Node(value);
+            head = new DllNode(value);
             tail = head;
             size++;
             return;
         }
 
-        Node newnode = new Node(value);
+        DllNode newnode = new DllNode(value);
         newnode.next = head;
+        head.prev = newnode;
+
         head = newnode;
         size++;
     }
 
     public void addLast(int value){
         if(this.head == null){
-            head = new Node(value);
+            head = new DllNode(value);
             tail = head;
             size++;
             return;
         }
 
-        Node newnode = new Node(value);
+        DllNode newnode = new DllNode(value);
         tail.next = newnode;
+        newnode.prev = tail;
         tail = newnode;
+
+
         size++;
     }
 
     public void add(int index, int value){
         if(this.head == null){
-            head = new Node(value);
+            head = new DllNode(value);
             tail = head;
             size++;
             return;
@@ -59,14 +66,17 @@ public class LinkedList {
         } else if(index == size){
             addLast(value);
         } else{
-            Node newnode = new Node(value);
-            Node temp = head;
+            DllNode newnode = new DllNode(value);
+            DllNode temp = head;
             while(index-- > 2){
                 temp = temp.next;
             }
 
             newnode.next = temp.next;
+            newnode.prev = temp;
+            temp.next.prev = newnode;
             temp.next = newnode;
+
             size++;
         }
     }
@@ -76,8 +86,9 @@ public class LinkedList {
             throw new LinkedListNullException();
         }
 
-        Node temp = head;
+        DllNode temp = head;
         head = head.next;
+        head.prev = null;
         temp.next = null;
 
         size--;
@@ -88,12 +99,13 @@ public class LinkedList {
             throw new LinkedListNullException();
         }
 
-        Node temp = head;
+        DllNode temp = head;
 
         while (temp.next.next != null){
             temp = temp.next;
         }
 
+        temp.next.prev = null;
         temp.next = null;
         tail = temp;
 
@@ -109,17 +121,29 @@ public class LinkedList {
             throw new LinkedListOutOfBoundException();
         }
 
+        if(index == 0){
+            deleteFirst();
+            return;
+        }
+
+        if(index == size-1){
+            deleteLast();
+            return;
+        }
+
         int count = 0;
-        Node temp = head;
+        DllNode temp = head;
 
         while (count < index-1){
             count++;
             temp = temp.next;
         }
 
-        Node removeNode = temp.next;
-        temp.next = temp.next.next;
+        DllNode removeNode = temp.next;
+        temp.next = removeNode.next;
+        removeNode.next.prev = temp;
         removeNode.next = null;
+        removeNode.prev = null;
 
         size--;
     }
@@ -129,11 +153,18 @@ public class LinkedList {
     }
 
     public void display(){
-        Node temp = head;
-
+        DllNode temp = head;
         while(temp != null){
             System.out.print(temp.data+"->");
             temp = temp.next;
+        }
+        System.out.println("NULL");
+
+
+        temp = tail;
+        while(temp != null){
+            System.out.print(temp.data+"->");
+            temp = temp.prev;
         }
         System.out.println("NULL");
     }
