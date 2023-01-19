@@ -3,8 +3,6 @@ package datastructures;
 import datastructures.exceptions.LinkedListNullException;
 import datastructures.exceptions.LinkedListOutOfBoundException;
 
-import java.util.ArrayList;
-
 
 public class LinkedList {
     // Node class for creating node object of singly linked list
@@ -31,6 +29,7 @@ public class LinkedList {
     /**
      * Adds value to the first position of the Linked List.
      * @param value the value to be added in the linked list.
+     * @return void
      * */
     public void addFirst(int value) {
         // checks if the head is null (empty linked list) or not
@@ -56,6 +55,7 @@ public class LinkedList {
     /**
      * Adds value to the last position of the Linked List.
      * @param value the value to be added in the linked list.
+     * @return void
      * */
     public void addLast(int value) {
         // checks if the head is null (empty linked list) or not
@@ -82,6 +82,7 @@ public class LinkedList {
      * Insert value to the given position of the Linked List.
      * @param index the position in which the value to be added.
      * @param value the value to be added in the linked list.
+     * @return void
      * */
     public void insert(int index, int value) {
         // checks if the head is null (empty linked list) or not
@@ -97,18 +98,18 @@ public class LinkedList {
                 addLast(value);
             } else { // for adding in between first and last of the linked list
                 Node newNode = new Node(value); // creates newNode to be added
-                Node temp = head; // temp is to traverse linked list
+                Node currentNode = head; // currentNode is to traverse linked list
 
                 // traverse through the linked list till index-1
                 while (index-- > 2) {
-                    temp = temp.next;
+                    currentNode = currentNode.next;
                 }
 
                 // links newNode to the element in the position index
                 // links the element in index-1 position to the newNode
                 // size is increased by 1 as new node is added to the linked list
-                newNode.next = temp.next;
-                temp.next = newNode;
+                newNode.next = currentNode.next;
+                currentNode.next = newNode;
                 size++;
             }
         }
@@ -117,6 +118,7 @@ public class LinkedList {
 
     /**
      * Delete a value from the first position of the Linked List.
+     * @return void
      * @exception LinkedListNullException throws when the linked list is null or empty
      * */
     public void deleteFirst() throws LinkedListNullException {
@@ -138,6 +140,7 @@ public class LinkedList {
 
     /**
      * Delete a value from the last position of the Linked List.
+     * @return void
      * @exception LinkedListNullException throws when the linked list is null or empty
      * */
     public void deleteLast() throws LinkedListNullException {
@@ -147,18 +150,18 @@ public class LinkedList {
             throw new LinkedListNullException();
         }
 
-        // temp node is for traversal purpose
-        Node temp = head;
+        // currentNode node is for traversal purpose
+        Node currentNode = head;
 
-        // traverse linked list
-        while (temp.next.next != null){
-            temp = temp.next;
+        // traverse linked list till node before last node
+        while (currentNode.next.next != null){
+            currentNode = currentNode.next;
         }
 
         // making the last previous node's next as null to remove connection from the last
         // then make the
-        temp.next = null;
-        tail = temp;
+        currentNode.next = null;
+        tail = currentNode;
 
         size--;
     }
@@ -166,6 +169,7 @@ public class LinkedList {
     /**
      * Delete a value from the given position of the linked list.
      * @param index the position in with the value to be deleted.
+     * @return void
      * @exception LinkedListNullException throws when the linked list is null or empty
      * @exception LinkedListOutOfBoundException throws when index is above the size of the linked list or less than 0
      * */
@@ -182,18 +186,20 @@ public class LinkedList {
             throw new LinkedListOutOfBoundException();
         }
 
-        // count is used to
+        // count is used for checking if index reached (for traversal)
         int count = 0;
-        Node temp = head;
+        Node currentNode = head;
 
-        // traverse linked list
+        // traverse linked list till index-1
+        // as we need to link the previous node and the next node of the removing list
         while (count < index-1){
             count++;
-            temp = temp.next;
+            currentNode = currentNode.next;
         }
 
-        Node removeNode = temp.next;
-        temp.next = temp.next.next;
+        // link the previous node and the next node of the removing list
+        Node removeNode = currentNode.next;
+        currentNode.next = currentNode.next.next;
         removeNode.next = null;
 
         size--;
@@ -209,14 +215,20 @@ public class LinkedList {
 
     /**
      * Displays the linked list
-     * */
-    public void display(){
-        Node temp = head;
+     *
+     * @return String
+     */
+    public String toString(){
+        Node currentNode = head;
+        String string = "";
 
-        while(temp != null){
-            System.out.print(temp.data+"->");
-            temp = temp.next;
+        // traverse through linked list
+        while(currentNode != null){
+            string += currentNode.data + "->";
+            currentNode = currentNode.next;
         }
-        System.out.println("NULL");
+        string += "NULL";
+
+        return string;
     }
 }
