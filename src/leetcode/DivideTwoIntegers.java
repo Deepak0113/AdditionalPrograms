@@ -20,8 +20,6 @@ public class DivideTwoIntegers {
                 count++;
             }
 
-//            System.out.print(dividend-(divisor<<1<<(count)));
-//            System.out.println(" " + (dividend-(divisor*1<<count)));
             quotient += 1<<count;
             dividend = dividend - divisor*(1<<count);
         }
