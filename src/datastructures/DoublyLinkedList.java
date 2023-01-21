@@ -31,7 +31,6 @@ public class DoublyLinkedList {
     /**
      * Adds value to the first position of the Linked List.
      * @param value the value to be added in the linked list.
-     * @return void
      * */
     public void addFirst(int value) {
         // checks if the head is null (empty linked list) or not
@@ -58,7 +57,6 @@ public class DoublyLinkedList {
     /**
      * Insert value to the given position of the Linked List.
      * @param value the position in which the value to be added.
-     * @return void
      * */
     public void addLast(int value) {
         // checks if the head is null (empty linked list) or not
@@ -98,20 +96,20 @@ public class DoublyLinkedList {
                 addLast(value);
             } else { // for adding in between first and last of the linked list
                 DllNode newNode = new DllNode(value); // creates newNode to be added
-                DllNode temp = head; // currentNode is to traverse linked list
+                DllNode currentNode = head; // currentNode is to traverse linked list
 
                 // traverse through the linked list till index-1
                 while (index-- > 2) {
-                    temp = temp.next;
+                    currentNode = currentNode.next;
                 }
 
                 // links newNode to the element in the position index
                 // links the element in index-1 position to the newNode
                 // size is increased by 1 as new node is added to the linked list
-                newNode.next = temp.next;
-                newNode.prev = temp;
-                temp.next.prev = newNode;
-                temp.next = newNode;
+                newNode.next = currentNode.next;
+                newNode.prev = currentNode;
+                currentNode.next.prev = newNode;
+                currentNode.next = newNode;
 
                 size++;
             }
@@ -133,10 +131,10 @@ public class DoublyLinkedList {
         // removeNode should be head node which is the node to be removed
         // make head node as next node
         // make removeNode next as null as it should have any other connections
-        DllNode temp = head;
+        DllNode currentNode = head;
         head = head.next;
         head.prev = null;
-        temp.next = null;
+        currentNode.next = null;
 
         size--;
     }
@@ -153,18 +151,18 @@ public class DoublyLinkedList {
         }
 
         // currentNode node is for traversal purpose
-        DllNode temp = head;
+        DllNode currentNode = head;
 
         // traverse linked list till node before last node
-        while (temp.next.next != null){
-            temp = temp.next;
+        while (currentNode.next.next != null){
+            currentNode = currentNode.next;
         }
 
         // making the last previous node's next as null to remove connection from the last
         // then make the current node as tail as it's the last node
-        temp.next.prev = null;
-        temp.next = null;
-        tail = temp;
+        currentNode.next.prev = null;
+        currentNode.next = null;
+        tail = currentNode;
 
         size--;
     }
@@ -194,6 +192,7 @@ public class DoublyLinkedList {
             return;
         }
 
+        // if index is 1 less than the size of the
         if(index == size-1){
             deleteLast();
             return;
@@ -201,16 +200,19 @@ public class DoublyLinkedList {
 
         // count is used for checking if index reached (for traversal)
         int count = 0;
-        DllNode temp = head;
+        DllNode currentNode = head;
 
+        // traverse linked list till index-1
+        // as we need to link the previous node and the next node of the removing list
         while (count < index-1){
             count++;
-            temp = temp.next;
+            currentNode = currentNode.next;
         }
 
-        DllNode removeNode = temp.next;
-        temp.next = removeNode.next;
-        removeNode.next.prev = temp;
+        // link the previous node and the next node of the removing list
+        DllNode removeNode = currentNode.next;
+        currentNode.next = removeNode.next;
+        removeNode.next.prev = currentNode;
         removeNode.next = null;
         removeNode.prev = null;
 
@@ -230,20 +232,17 @@ public class DoublyLinkedList {
      *
      * @return String
      */
-    public void display(){
-        DllNode temp = head;
-        while(temp != null){
-            System.out.print(temp.data+"->");
-            temp = temp.next;
-        }
-        System.out.println("NULL");
+    public String toString(){
+        DllNode currentNode = head;
+        String string = "";
 
-
-        temp = tail;
-        while(temp != null){
-            System.out.print(temp.data+"->");
-            temp = temp.prev;
+        // traverse through linked list
+        while(currentNode != null){
+            string += currentNode.data + "->";
+            currentNode = currentNode.next;
         }
-        System.out.println("NULL");
+        string += "NULL";
+
+        return string;
     }
 }

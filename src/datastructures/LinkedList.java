@@ -29,7 +29,6 @@ public class LinkedList {
     /**
      * Adds value to the first position of the Linked List.
      * @param value the value to be added in the linked list.
-     * @return void
      * */
     public void addFirst(int value) {
         // checks if the head is null (empty linked list) or not
@@ -55,7 +54,6 @@ public class LinkedList {
     /**
      * Adds value to the last position of the Linked List.
      * @param value the value to be added in the linked list.
-     * @return void
      * */
     public void addLast(int value) {
         // checks if the head is null (empty linked list) or not
@@ -82,7 +80,6 @@ public class LinkedList {
      * Insert value to the given position of the Linked List.
      * @param index the position in which the value to be added.
      * @param value the value to be added in the linked list.
-     * @return void
      * */
     public void insert(int index, int value) {
         // checks if the head is null (empty linked list) or not
@@ -229,15 +226,15 @@ public class LinkedList {
      */
     public String toString(){
         Node currentNode = head;
-        String string = "";
+        StringBuilder string = new StringBuilder();
 
         // traverse through linked list
         while(currentNode != null){
-            string += currentNode.data + "->";
+            string.append(currentNode.data).append("->");
             currentNode = currentNode.next;
         }
-        string += "NULL";
+        string.append("NULL");
 
-        return string;
+        return string.toString();
     }
 }
