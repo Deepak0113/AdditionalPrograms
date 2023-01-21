@@ -118,7 +118,6 @@ public class LinkedList {
 
     /**
      * Delete a value from the first position of the Linked List.
-     * @return void
      * @exception LinkedListNullException throws when the linked list is null or empty
      * */
     public void deleteFirst() throws LinkedListNullException {
@@ -140,7 +139,6 @@ public class LinkedList {
 
     /**
      * Delete a value from the last position of the Linked List.
-     * @return void
      * @exception LinkedListNullException throws when the linked list is null or empty
      * */
     public void deleteLast() throws LinkedListNullException {
@@ -159,7 +157,7 @@ public class LinkedList {
         }
 
         // making the last previous node's next as null to remove connection from the last
-        // then make the
+        // then make the current node as tail as it's the last node
         currentNode.next = null;
         tail = currentNode;
 
@@ -169,7 +167,6 @@ public class LinkedList {
     /**
      * Delete a value from the given position of the linked list.
      * @param index the position in with the value to be deleted.
-     * @return void
      * @exception LinkedListNullException throws when the linked list is null or empty
      * @exception LinkedListOutOfBoundException throws when index is above the size of the linked list or less than 0
      * */
@@ -184,6 +181,18 @@ public class LinkedList {
         // if so throw LinkedListOutOfBoundException
         if(index >= size || index<0){
             throw new LinkedListOutOfBoundException();
+        }
+
+        // if index is 0 call deleteFirst() method
+        if(index == 0){
+            deleteFirst();
+            return;
+        }
+
+        // if index is 1 less than the size of the
+        if(index == size-1){
+            deleteLast();
+            return;
         }
 
         // count is used for checking if index reached (for traversal)
