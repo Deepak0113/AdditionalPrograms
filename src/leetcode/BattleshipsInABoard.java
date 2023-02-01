@@ -13,7 +13,7 @@ public class BattleshipsInABoard {
         }
     }
 
-    public int countBattleships(char[][] board) {
+    private int countBattleships(char[][] board) {
         int m=board.length, n=board[0].length;
         int count = 0;
 
