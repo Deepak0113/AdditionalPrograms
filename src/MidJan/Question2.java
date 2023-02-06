@@ -1,2 +1,5 @@
-package MidJan;public class Question2 {
+package MidJan;
+
+public class Question2 {
+
 }
